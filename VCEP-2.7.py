@@ -2,7 +2,7 @@
 """
 @name: VOCALOID™ of Chinese Moegirlpedia™ Editor Plus
 @author: Transentropy
-@version: Beta 2.6.0
+@version: Beta 2.7
 @source: https://github.com/transentropy/VCEP
 2.6.0小更新
 
@@ -12,6 +12,12 @@
 自动下载视频封面
 补全了ACE常用歌姬
 使用了更简洁的模板
+
+2.7小更新
+修复了一些已知的问题
+自动新建文件夹
+更正羽指向赤羽的问题
+修复了标题 异常
 """
 
 from json import loads
@@ -36,7 +42,7 @@ vLis = ['洛天依', '言和', '乐正绫', '星尘(平行四界)', '心华',
         '洛天依ai', '言和ai', '乐正绫ai', '星尘Infinity']
 # 修改vLis时 请同步更改vDic和554行的映射
 vDic = {'洛': 0, '依': 0, '南': 0, '言': 1, '绫': 2,'北': 2, '星': 3, '尘': 3, '华': 4, '華': 4,
-        '龙': 5, '牙': 5, '初': 6, '葱': 6, '墨': 7,'弦': 7, '摩': 8, '柯': 8,
+        '龙': 5, '牙': 5, '初': 6, '葱': 6, '墨': 7,'弦': 7, '徵': 8, '摩': 8, '柯': 8,
         '幻': 9,
         '赤': 10, '诗': 11, '岸': 11,'苍': 12, '穹': 12, '海': 13, '牧': 14, '减': 15, 'Minus': 15, 'minus': 15,
         '青': 17, '溯': 17, '默': 18, '晓': 19, '沨': 20,'Weina': 21, 'weina': 21, '铮': 22, '煊': 23, '澄': 24,
@@ -290,6 +296,7 @@ class Intro:
         while index < len(self.stfLi):
             tmpList = []
             sort = len(jobList) - 5
+            # print(self.stfLi[index][0])
             for jobs in self.stfLi[index][0]:
                 tmp = self.staffParse(jobs)
                 if tmp[0] < 0:
@@ -377,7 +384,7 @@ class Intro:
                     extraList.append(path)
                     index = index + 1
                     dic = jobDictZH
-        #path = dic['default']
+        path = dic['default']
         if type(path) == int:
             indexSet.add(path)
         elif path == '+':
@@ -526,10 +533,10 @@ class Song:
         engineSet = set()
 
         if len(tmpTitles) > 0:
-            print(tmpTitles)
+            # print(tmpTitles)
             tmpLi = re.split("[—-]+|[Ff]eat.|by", tmpTitles[0])
             special_chars = "!@#$%^&*()_+[]{};:,./<>?\|`~-='"
-            print(tmpLi)
+            # print(tmpLi)
             # 删除标题中的特殊字符
             for char in special_chars:
                 tmpLi[0] = tmpLi[0].replace(char, "")
@@ -571,8 +578,8 @@ class Song:
             if len(tmpSet) > len(singerSet):
                 singerSet = tmpSet.copy()
         for i in singerSet:
-            print("vLis")
-            print(vLis[i])
+            # print("vLis")
+            # print(vLis[i])
             if i <= 8:
                 engineSet.add(0) # VOCALOID
             elif i == 9:
@@ -696,16 +703,15 @@ def download_img(url, file_name):
     except Exception as e:
         print(e)
         error_count += 1
-    print('下载图片结束！')
     return success_count, error_count
 
 
 if __name__ == "__main__":
-    print("""VOCALOID™ of Chinese Moegirlpedia™ Editor Plus (Beta 2.6.0)
+    print("""VOCALOID™ of Chinese Moegirlpedia™ Editor Plus (Beta 2.7)
 Power by Transentropy©
-GET UPDATED: github.com/transentropy/VCEP\n""")
+GET UPDATED: github.com/transentropy/VCEP(Stop Update)\n""")
 
-    i = 3
+    i = 4
 
     while i > 0:
         print("正在检测网络连接...")
